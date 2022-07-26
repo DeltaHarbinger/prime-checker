@@ -64,6 +64,9 @@ a {
 @media only screen and (min-width: 820px) {
   footer {
     text-align: left;
+  }
+  
+  a {
     padding-left: 2em;
   }
 }
