@@ -1,1 +1,0 @@
-export type PrimeMap = Record<number, boolean>

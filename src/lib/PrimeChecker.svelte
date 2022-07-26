@@ -1,5 +1,5 @@
 <script lang="ts">
-import { isPrime } from "@/services/prime";
+import { isPrime, getPrimesUpTo } from "@/services/prime";
 
 let primeInput: number = 0
 
@@ -23,12 +23,15 @@ const onKeyPressed = (event: KeyboardEvent) => {
 
 </script>
 
-<input type="number" inputmode="numeric" on:keydown={onKeyPressed} pattern="[0-9]" name="prine-input" id="primeInput" bind:value={primeInput} />
+<input type="number" aria-label="prime-input" inputmode="numeric" on:keydown={onKeyPressed} pattern="[0-9]" name="prine-input" id="primeInput" bind:value={primeInput} />
 {#if inputIsPrime !== null}
-    <p class:confirm={inputIsPrime} class:reject={!inputIsPrime} class="result-text">{inputIsPrime ? "That's a prime number!" : "No, that's not a prime number!"}</p>
+    <p aria-label="prime-check-result" class:confirm={inputIsPrime} class:reject={!inputIsPrime} class="result-text">{inputIsPrime ? "That's a prime number!" : "No, that's not a prime number!"}</p>
 {/if}
 {#if primeTime !== null}
     <p>Result took {primeTime} milliseconds</p>
+{/if}
+{#if !Number.isSafeInteger(primeInput)}
+    <p class:reject={true}>We may have issues checking large numbers. Results beyond this point could be inaccurate.</p>
 {/if}
 
 <style scoped>
