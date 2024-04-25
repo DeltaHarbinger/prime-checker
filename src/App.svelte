@@ -1,17 +1,27 @@
 <script lang="ts">
 import PrimeChecker from "@/lib/PrimeChecker.svelte";
+import PrimeCache from "./lib/PrimeCache.svelte";
 </script>
 
 <main>
+  <div>
+    <div id="primeContainer">
+      <h1>Quick Prime Check</h1>
+      <PrimeChecker />
+    </div>
+    <div id="methodInfo">
+      This application uses <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve of Eratosthenes</a>
+      and a locally stored cache of discovered primes to determine if your number is prime. 
+    </div>
+    <div id="primeCache">
+      <PrimeCache />
+    </div>
+  </div>
   <a id="repoLink" href="https://github.com/DeltaHarbinger/prime-checker">
     <img id="githubImage" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="github-logo">
   </a>
-  <div id="primeContainer">
-    <h1>Quick Prime Check</h1>
-    <PrimeChecker />
-  </div>
   <footer>
-    <a href="http://github.com/DeltaHarbinger">
+    <a id="profileLink" href="http://github.com/DeltaHarbinger">
       © DeltaHarbinger
     </a>
   </footer>
@@ -24,11 +34,27 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
 }
 
 main {
-  height: 60vh;
   text-align: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 90vh;
+  max-height: 90vh;
+}
+
+#primeContainer {
+  max-height: 60vh;
+}
+
+#methodInfo {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+#primeCache {
+  max-height: 30vh;
+  overflow-y: scroll;
 }
 
 h1 {
@@ -42,7 +68,7 @@ h1 {
 }
 
 #repoLink {
-  position: absolute;
+  position: fixed;
   bottom: 2em;
   right: 2em;
 }
@@ -50,7 +76,7 @@ h1 {
 footer {
   padding-top: .5em;
   padding-bottom: .5em;
-  position: absolute;
+  position: fixed;
   width: 100%;
   bottom: 0;
   font-size: 1.25em;
@@ -66,7 +92,7 @@ a {
     text-align: left;
   }
   
-  a {
+  #profileLink {
     padding-left: 2em;
   }
 }

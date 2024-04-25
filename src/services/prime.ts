@@ -1,4 +1,6 @@
-let primecache: number[] = [2]
+import { get,  writable } from "svelte/store"
+
+export let primecache = writable([2])
 
 /**
  * Generates a list of prime numbers up to the input. A cache may be used to speed up the process.
@@ -45,16 +47,16 @@ export const isPrime = (x: number) => {
         return false
     }
     // Checks if the number could be in cache. If it is, it's a prime number
-    if(x <= primecache[primecache.length - 1] && primecache.includes(x)) {
+    if(x <= get(primecache)[get(primecache).length - 1] && get(primecache).includes(x)) {
         return true
     }
     // If it isn't in the cache and is less than the highest number in the cache, it can't be prime
-    if(x < primecache[primecache.length - 1]) {
+    if(x < get(primecache)[get(primecache).length - 1]) {
         return false
     }
     // Checks cache before attempting to find more potential prime factors
     const root = Math.floor(Math.pow(x, 0.5))
-    for(const num of primecache) {
+    for(const num of get(primecache)) {
         if(x % num === 0) {
             return false
         }
@@ -63,10 +65,10 @@ export const isPrime = (x: number) => {
         }
     }
     // Find all primes up to the square root of the input
-    const primesToRoot: number[] = getPrimesUpTo(root, primecache)
+    const primesToRoot: number[] = getPrimesUpTo(root, get(primecache))
     // Updates the cache if the prime list is larger
-    if(primesToRoot.length > primecache.length) {
-        primecache = primesToRoot
+    if(primesToRoot.length > get(primecache).length) {
+        primecache.set(primesToRoot)
     }
     // Checks if the input is divisible by any prime number up to the root
     return primesToRoot.findIndex(prime => x % prime === 0) === -1
